@@ -13,10 +13,13 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
-         $file = fopen(storage_path('app/dataset/corn_disease.csv'), 'r');
+         $file = fopen(storage_path('app\dataset\customer_churn_dataset-training-master.csv'), 'r');
         fgetcsv($file);
 
         while (($data = fgetcsv($file, 1000, ',')) !== FALSE) {
+            if (empty(array_filter($data))) {
+                continue;
+            }
             Customer::create([
                 'customer_id' => $data[0],
                 'age' => $data[1],
